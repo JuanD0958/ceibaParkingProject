@@ -2,11 +2,8 @@ package com.ceibaParking.application.service;
 
 import java.util.Date;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ceibaParking.application.domain.Car;
@@ -29,14 +26,14 @@ public class ParkingService{
 	private MotorcycleRepository motorcycleRepository;
 	
 	@PostMapping("/registerCar")
-	public boolean registerCar(@Valid @RequestBody Car car) {
+	public boolean registerCar(Car car) {
 		car.setStartTime(new Date());
 		carRepository.save(car);
 		return true;
 	}
 
 	@PostMapping("/registerMotorcycle")
-	public boolean registerMotorcycle(@Valid @RequestBody Motorcycle motorcicle) {
+	public boolean registerMotorcycle(Motorcycle motorcicle) {
 		motorcycleRepository.save(motorcicle);
 		return true;
 	}
