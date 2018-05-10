@@ -1,19 +1,31 @@
 package com.ceibaParking.application.domain;
 
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Builder
+@Entity
 public class Motorcycle extends Vehicle{
-	public int cubicCentimeters;
+	@Column
+	public int cubicCentimeters;	
+	
 	public Motorcycle() {
     	typeVehicle = 2;
     }
-	public Motorcycle(int cubicCentimeters) {
+	
+	@Builder
+	public Motorcycle(String licencePlate,int typeVehicle,Date startTime,Date endTime,int cubicCentimeters) {
 		this.cubicCentimeters = cubicCentimeters;
+		this.licencePlate= licencePlate;
+		this.startTime= startTime;
+		this.endTime= endTime;
     	typeVehicle = 2;
     }
 	

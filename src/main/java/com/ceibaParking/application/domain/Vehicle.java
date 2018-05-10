@@ -1,14 +1,24 @@
 package com.ceibaParking.application.domain;
 
-import java.math.BigDecimal;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 import lombok.Getter;
 import lombok.Setter;
 
+@MappedSuperclass
 @Getter
 @Setter
 public abstract class Vehicle {
-	protected String licencePlate;	
-	protected BigDecimal costFactor;
+	@Id
+	protected String licencePlate;
+	@Column
 	protected int typeVehicle;
+	@Column
+	protected Date startTime;
+	@Column
+	protected Date endTime;
 }
