@@ -5,14 +5,11 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.ceibaParking.application.constants.ConstantTypeVehicle;
 
-@Getter
-@Setter
+
 @Entity
-public class Motorcycle extends Vehicle{
+public class Motorcycle extends Vehicle implements ConstantTypeVehicle{
 	@Column
 	public int cubicCentimeters;	
 	
@@ -20,14 +17,12 @@ public class Motorcycle extends Vehicle{
     	typeVehicle = 2;
     }
 	
-	@Builder
-	public Motorcycle(String licencePlate,int typeVehicle,Date startTime,Date endTime,int cubicCentimeters) {
+	public Motorcycle(String licencePlate,Date startTime,Date endTime,int cubicCentimeters) {
 		this.cubicCentimeters = cubicCentimeters;
 		this.licencePlate= licencePlate;
 		this.startTime= startTime;
 		this.endTime= endTime;
-    	typeVehicle = 2;
-    }
-	
+    	this.typeVehicle = TYPE_MOTORCYCLE;
+    }	
 	
 }

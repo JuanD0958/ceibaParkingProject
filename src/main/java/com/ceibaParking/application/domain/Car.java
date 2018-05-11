@@ -4,24 +4,21 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import org.springframework.stereotype.Component;
 
-@Getter
-@Setter
+import com.ceibaParking.application.constants.ConstantTypeVehicle;
+
+@Component
 @Entity
-public class Car extends Vehicle {
-    
+public class Car extends Vehicle implements ConstantTypeVehicle{	
 	public Car() {
-    	typeVehicle = 1;
-    }
+		
+	}
 	
-	@Builder
-	public Car(String licencePlate,int typeVehicle,Date startTime,Date endTime) {
+	public Car(String licencePlate,Date startTime,Date endTime) {
 		this.licencePlate= licencePlate;
 		this.startTime= startTime;
 		this.endTime= endTime;
-    	typeVehicle = 1;
+    	this.typeVehicle = TYPE_CAR;
     }
 }

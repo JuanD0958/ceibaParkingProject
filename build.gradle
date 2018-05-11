@@ -10,6 +10,7 @@ buildscript {
 	}
 }
 
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
@@ -23,7 +24,6 @@ sourceCompatibility = 1.8
 repositories {
 	mavenCentral()
 }
-
 
 
 dependencies {
@@ -44,6 +44,7 @@ jar {
                    'Implementation-Version': version
     }
 }
+
 
 test {
 	jacoco {
