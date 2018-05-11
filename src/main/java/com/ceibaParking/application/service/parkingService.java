@@ -13,13 +13,7 @@ import com.ceibaParking.application.domain.Motorcycle;
 import com.ceibaParking.application.repository.CarRepository;
 import com.ceibaParking.application.repository.MotorcycleRepository;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @RestController
 public class ParkingService implements ConstantTypeVehicle{
 	@Autowired
