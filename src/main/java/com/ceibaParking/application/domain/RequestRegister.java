@@ -2,18 +2,19 @@ package com.ceibaParking.application.domain;
 
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RequestRegister {	
+public class RequestRegister {
 	private Vehicle vehicle;
 	private Date startTime;
-	
+
 	public RequestRegister() {
-		
+
 	}
+
 	public RequestRegister(Vehicle vehicle, Date startTime) {
+		super();
 		this.setVehicle(vehicle);
 		this.setStartTime(startTime);
 	}
@@ -33,5 +34,5 @@ public class RequestRegister {
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
-		
+
 }
