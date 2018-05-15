@@ -6,25 +6,33 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RequestRegister {
-	private Vehicle vehicle;
-	private Date startTime;
-
-	public RequestRegister() {
-
-	}
-
-	public RequestRegister(Vehicle vehicle, Date startTime) {
+	
+	public RequestRegister(Car car, Date startTime) {
 		super();
-		this.setVehicle(vehicle);
-		this.setStartTime(startTime);
+		this.car = car;
+		this.startTime = startTime;
 	}
 
-	public Vehicle getVehicle() {
-		return vehicle;
+	public RequestRegister(Motorcycle motorcycle, Date startTime) {
+		super();
+		this.motorcycle = motorcycle;
+		this.startTime = startTime;
 	}
 
-	public void setVehicle(Vehicle vehicle) {
-		this.vehicle = vehicle;
+	public Car getCar() {
+		return car;
+	}
+
+	public void setCar(Car car) {
+		this.car = car;
+	}
+
+	public Motorcycle getMotorcycle() {
+		return motorcycle;
+	}
+
+	public void setMotorcycle(Motorcycle motorcycle) {
+		this.motorcycle = motorcycle;
 	}
 
 	public Date getStartTime() {
@@ -34,5 +42,13 @@ public class RequestRegister {
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
+
+	private Car car;
+	private Motorcycle motorcycle;
+	private Date startTime;
+
+	public RequestRegister() {
+
+	}	
 
 }

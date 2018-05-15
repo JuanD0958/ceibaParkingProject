@@ -2,12 +2,13 @@ package com.ceibaParking.application.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
 
@@ -19,10 +20,11 @@ import com.ceibaParking.application.constants.ConstantTypeVehicle;
 public class Ticket implements ParkingPrices, ConstantTypeVehicle{
 
 	@Id
-	private String ticketNumber;
-	@OneToOne
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int ticketNumber;
+	@OneToOne(cascade = {CascadeType.ALL})
 	private Car car;
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	private Motorcycle motorcycle;
 	private Date startTime;
 	private Date endTime;
@@ -51,45 +53,44 @@ public class Ticket implements ParkingPrices, ConstantTypeVehicle{
 		return motorcycle;
 	}
 
-	public long calcualteParkingHours(Date endTime) {
-		 final int MILLI_TO_HOUR = 1000 * 60 * 60;
-		 return (int) (endTime.getTime() - startTime.getTime()) / MILLI_TO_HOUR;
+	public int getTicketNumber() {
+		return ticketNumber;
 	}
 
-	public long calcualteParkingDays(Date endTime) {
-	    long diff = endTime.getTime() - startTime.getTime();
-	    return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+	public void setTicketNumber(int ticketNumber) {
+		this.ticketNumber = ticketNumber;
 	}
 
-	public long calculateCarParkingCost(Date endTime) {
-		long daysOfParking = calcualteParkingDays(endTime);
-		long hoursOfParking = calcualteParkingHours(endTime) - daysOfParking * 24;
-		long costParking = 0;
-		
-		costParking = daysOfParking * CAR_DAY_COST;		
-		if(hoursOfParking >= HOUR_BEGIN_DAY_CHARGE && hoursOfParking <= HOUR_FINISH_DAY_CHARGE) {
-			costParking += CAR_DAY_COST;
-		}else {
-			costParking += hoursOfParking * CAR_HOUR_COST;
-		}
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public void setCar(Car car) {
+		this.car = car;
+	}
+
+	public void setMotorcycle(Motorcycle motorcycle) {
+		this.motorcycle = motorcycle;
+	}
+
+	public BigDecimal getCostParking() {
 		return costParking;
 	}
-	
-	public long calculateMotorcycleParkingCost(Date endTime) {
-		long daysOfParking = calcualteParkingDays(endTime);
-		long hoursOfParking = calcualteParkingHours(endTime) - daysOfParking * 24;
-		long costParking = 0;
-		
-		costParking = daysOfParking * CAR_DAY_COST;		
-		if(hoursOfParking >= HOUR_BEGIN_DAY_CHARGE && hoursOfParking <= HOUR_FINISH_DAY_CHARGE) {
-			costParking += MOTORCYCLE_DAY_COST;
-		}else {
-			costParking += hoursOfParking * MOTORCYCLE_HOUR_COST;
-		}	
-		if(motorcycle.cubicCentimeters > HIGH_CYLINDERED_MOTORCYCLE) {
-			costParking += HIGH_CYLINDERED_MOTORCYCLE_CHARGE;
-		}				
-		return costParking;
+
+	public void setCostParking(BigDecimal costParking) {
+		this.costParking = costParking;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 }
