@@ -21,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ceibaParking.application.constants.ConstantMessageExceptions;
 import com.ceibaParking.application.domain.Car;
+import com.ceibaParking.application.domain.Motorcycle;
 import com.ceibaParking.application.domain.RequestRegister;
 import com.ceibaParking.application.domain.Ticket;
 import com.ceibaParking.application.repository.jpa.CarRepository;
@@ -117,5 +118,15 @@ public class ParkingControllerTest implements ConstantMessageExceptions {
 		Car car = new Car("MMY000");
 		Ticket ticket = new Ticket(car,formatter.parse(startDate));
 		assertEquals(8000, parkingController.retireCar(ticket, formatter.parse(endDate)) );
+	}
+	
+	@Test
+	public void retireMotorcycleTenHours() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
+		String startDate = "15-05-2018 09:39";
+		String endDate = "15-05-2018 10:40";
+		Motorcycle moto = new Motorcycle("ABC123A",550);
+		Ticket ticket = new Ticket(moto,formatter.parse(startDate));
+		assertEquals(2500, parkingController.retireMotorCycle(ticket, formatter.parse(endDate)) );
 	}
 }

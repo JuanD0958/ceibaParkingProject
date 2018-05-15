@@ -1,33 +1,54 @@
 package com.ceibaParking.application.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
 import org.springframework.stereotype.Component;
 
 import com.ceibaParking.application.business.ParkingPrices;
 import com.ceibaParking.application.constants.ConstantTypeVehicle;
 
-//@Entity
+@Entity
 @Component
 public class Ticket implements ParkingPrices, ConstantTypeVehicle{
 
-//	@Id
+	@Id
 	private String ticketNumber;
-	@Autowired
-//	@ManyToOne
-//	@JoinColumn(name = "licencePlate")
-	private Vehicle vehicle;
+	@OneToOne
+	private Car car;
+	@OneToOne
+	private Motorcycle motorcycle;
 	private Date startTime;
+	private Date endTime;
+	private BigDecimal costParking;
 
 	public Ticket() {
 	}
 
-	public Ticket(Vehicle vehicle, Date startTime) {
+	public Ticket(Car car, Date startTime) {
 		super();
-		this.vehicle = vehicle;
 		this.startTime = startTime;
+		this.car = car;
+	}
+	
+	public Ticket(Motorcycle motorcycle, Date startTime) {
+		super();	
+		this.startTime = startTime;
+		this.motorcycle = motorcycle;
+	}
+	
+	public Car getCar() {
+		return car;
+	}
+
+	public Motorcycle getMotorcycle() {
+		return motorcycle;
 	}
 
 	public long calcualteParkingHours(Date endTime) {
@@ -39,22 +60,8 @@ public class Ticket implements ParkingPrices, ConstantTypeVehicle{
 	    long diff = endTime.getTime() - startTime.getTime();
 	    return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 	}
-	
-	public Vehicle getVehicle() {
-		return vehicle;
-	}
-	
-	public long calculateCost(Date endTime) {		
-		if(vehicle.getTypeVehicle() == TYPE_CAR) {
-			return calculateCarParkingCost(endTime);
-		}
-		if(vehicle.getTypeVehicle() == TYPE_MOTORCYCLE) {
-			
-		}
-		return 0;
-	}
 
-	private long calculateCarParkingCost(Date endTime) {
+	public long calculateCarParkingCost(Date endTime) {
 		long daysOfParking = calcualteParkingDays(endTime);
 		long hoursOfParking = calcualteParkingHours(endTime) - daysOfParking * 24;
 		long costParking = 0;
@@ -67,6 +74,22 @@ public class Ticket implements ParkingPrices, ConstantTypeVehicle{
 		}
 		return costParking;
 	}
-
 	
+	public long calculateMotorcycleParkingCost(Date endTime) {
+		long daysOfParking = calcualteParkingDays(endTime);
+		long hoursOfParking = calcualteParkingHours(endTime) - daysOfParking * 24;
+		long costParking = 0;
+		
+		costParking = daysOfParking * CAR_DAY_COST;		
+		if(hoursOfParking >= HOUR_BEGIN_DAY_CHARGE && hoursOfParking <= HOUR_FINISH_DAY_CHARGE) {
+			costParking += MOTORCYCLE_DAY_COST;
+		}else {
+			costParking += hoursOfParking * MOTORCYCLE_HOUR_COST;
+		}	
+		if(motorcycle.cubicCentimeters > HIGH_CYLINDERED_MOTORCYCLE) {
+			costParking += HIGH_CYLINDERED_MOTORCYCLE_CHARGE;
+		}				
+		return costParking;
+	}
+
 }

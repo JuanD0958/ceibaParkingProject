@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.ceibaParking.application.business.ParkingRules;
@@ -17,6 +18,7 @@ import com.ceibaParking.application.domain.Vehicle;
 import com.ceibaParking.application.exception.VehicleRegistrationException;
 import com.ceibaParking.application.repository.jpa.CarRepository;
 import com.ceibaParking.application.repository.jpa.MotorcycleRepository;
+import com.ceibaParking.application.repository.jpa.TicketRepository;
 
 @Service
 public class ParkingController implements ParkingRules, ConstantTypeVehicle, ConstantMessageExceptions {
@@ -24,6 +26,9 @@ public class ParkingController implements ParkingRules, ConstantTypeVehicle, Con
 	private CarRepository carRepository;
 	@Autowired
 	private MotorcycleRepository motorcycleRepository;
+	@Autowired
+	private TicketRepository ticketRepository;
+
 
 	public ParkingController() {
 	}
@@ -60,13 +65,16 @@ public class ParkingController implements ParkingRules, ConstantTypeVehicle, Con
 
 	public void registerCar(RequestRegister requestRegister) {
 		validateRegister(requestRegister.getVehicle(), requestRegister.getStartTime());
+		
 		carRepository.save((Car) requestRegister.getVehicle());
 		//GENERAR TICKET ( VEHICULO , START_TIME )
 	}
 
 	public void registerMotorcycle(RequestRegister requestRegister) {
 		validateRegister(requestRegister.getVehicle(), requestRegister.getStartTime());
+		
 		motorcycleRepository.save((Motorcycle) requestRegister.getVehicle());
+		//ticketRepository
 		//GENERAR_TICKET ( VEHICULO , START_TIME )
 	}
 
@@ -79,7 +87,13 @@ public class ParkingController implements ParkingRules, ConstantTypeVehicle, Con
 	}
 	
 	public long retireCar(Ticket ticket, Date endTime) {
-		return ticket.calculateCost(endTime);
+		carRepository.delete(ticket.getCar());
+		return ticket.calculateCarParkingCost(endTime);
+	}
+	
+	public long retireMotorCycle(Ticket ticket, Date endTime) {
+		motorcycleRepository.delete(ticket.getMotorcycle());
+		return ticket.calculateMotorcycleParkingCost(endTime);
 	}
 	
 }
