@@ -29,4 +29,12 @@ public class CarRepositoryImpl {
 	public Car findCarByPlate(String plate) {
 		return carRepository.findById(plate).get();
 	}
+		
+	public int numberOfCarsParked() {
+		return carRepository.findAll().size();
+	}
+	
+	public boolean existsById(String licencePlate) {
+		return carRepository.existsById(licencePlate);
+	}
 }

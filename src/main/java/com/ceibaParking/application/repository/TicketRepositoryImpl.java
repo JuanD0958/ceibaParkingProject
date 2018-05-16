@@ -24,4 +24,6 @@ public class TicketRepositoryImpl implements ConstantMessageExceptions {
 			throw new VehicleRegistrationException(VEHICLE_NO_EXIST);
 		}
 	}
+	
+
 }

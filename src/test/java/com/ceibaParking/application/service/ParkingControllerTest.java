@@ -1,13 +1,13 @@
 package com.ceibaParking.application.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,13 +20,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.ceibaParking.application.business.ParkingRulesImpl;
 import com.ceibaParking.application.constants.ConstantMessageExceptions;
 import com.ceibaParking.application.domain.Car;
 import com.ceibaParking.application.domain.Motorcycle;
 import com.ceibaParking.application.domain.RequestRegister;
 import com.ceibaParking.application.domain.Ticket;
-import com.ceibaParking.application.repository.TicketRepositoryImpl;
-import com.ceibaParking.application.repository.jpa.CarRepository;
+import com.ceibaParking.application.domain.Vehicle;
+import com.ceibaParking.application.exception.VehicleRegistrationException;
+import com.ceibaParking.application.repository.CarRepositoryImpl;
+import com.ceibaParking.application.repository.MotorcycleRepositoryImpl;
 import com.ceibaParking.application.repository.jpa.MotorcycleRepository;
 
 @SpringBootTest
@@ -37,11 +40,20 @@ public class ParkingControllerTest implements ConstantMessageExceptions {
 	@Autowired
 	ParkingController parkingController;
 	@Mock
-	MotorcycleRepository motorcycleRepository;
+	MotorcycleRepository motorcycleRepositoryMock;
 	@Mock
-	CarRepository carRepositoryMock;
+	CarRepositoryImpl carRepositoryMock;
 	@Mock
 	TicketController TicketController;
+	@Mock
+	ParkingRulesImpl parkingRulesMock;
+	@Mock
+	CarRepositoryImpl carRepositoryImpl;
+	
+	@Autowired
+	CarRepositoryImpl carRepository;
+	@Autowired
+	MotorcycleRepositoryImpl motorcycleRepository;
 
 	@Before
 	public void setup() {
@@ -50,13 +62,23 @@ public class ParkingControllerTest implements ConstantMessageExceptions {
 
 	@Test
 	public void registerCarService() throws ParseException {
-		// Arrange
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
 		String startDate = "26-05-2017 09:39";
 		Car car = new Car("MMY000");
-		RequestRegister request = new RequestRegister(car, formatter.parse(startDate));
-		Mockito.when(carRepositoryMock.save(car)).thenReturn(car);
+		RequestRegister request = new RequestRegister(car, formatter.parse(startDate));		
 		parkingController.registerCar(request);
+		assertTrue(carRepository.existsById(car.getLicencePlate()));
+	}
+	
+	@Test
+	public void registerMotorcycleService() throws ParseException {
+		// Arrange
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
+		String startDate = "26-05-2017 09:39";
+		Motorcycle motorcycle = new Motorcycle("XYZ123A",125);
+		RequestRegister request = new RequestRegister(motorcycle, formatter.parse(startDate));
+		parkingController.registerMotorcycle(request);
+		assertTrue(motorcycleRepository.existsById(motorcycle.getLicencePlate()));
 	}
 
 	@Test
@@ -68,6 +90,7 @@ public class ParkingControllerTest implements ConstantMessageExceptions {
 			String startDate = "26-05-2017 09:39";
 			Car car = new Car("AAA000");
 			RequestRegister request = new RequestRegister(car, formatter.parse(startDate));
+			Mockito.doThrow(new VehicleRegistrationException(NO_LAWFUL_DAY)).when(parkingRulesMock).validateRegister((Vehicle)Mockito.any(),(Date) Mockito.any());
 			parkingController.registerCar(request);
 			fail();
 		} catch (Exception e) {
@@ -81,12 +104,8 @@ public class ParkingControllerTest implements ConstantMessageExceptions {
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
 			String startDate = "11-05-2018 09:39";
 			Car car = new Car("MMY000");
-			List<Car> listCar = new ArrayList<>();
-			for (int i = 0; i < 25; i++) {
-				listCar.add(car);
-			}
 			RequestRegister request = new RequestRegister(car, formatter.parse(startDate));
-			Mockito.when(carRepositoryMock.findAll()).thenReturn(listCar);
+			Mockito.doThrow(new VehicleRegistrationException(NO_PLACES_AVAILABLES)).when(parkingRulesMock).validateRegister((Vehicle)Mockito.any(),(Date) Mockito.any());
 			parkingController.registerCar(request);
 			fail();
 		} catch (Exception e) {
