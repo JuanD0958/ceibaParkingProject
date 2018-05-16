@@ -1,15 +1,18 @@
 package com.ceibaParking.application.service;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ceibaParking.application.business.CalculateTime;
+import com.ceibaParking.application.business.CalculatorCost;
 import com.ceibaParking.application.business.ParkingRules;
 import com.ceibaParking.application.constants.ConstantMessageExceptions;
 import com.ceibaParking.application.constants.ConstantTypeVehicle;
-import com.ceibaParking.application.domain.Car;
+import com.ceibaParking.application.domain.PaymentSlip;
 import com.ceibaParking.application.domain.RequestRegister;
 import com.ceibaParking.application.domain.Ticket;
 import com.ceibaParking.application.domain.Vehicle;
@@ -25,6 +28,10 @@ public class ParkingController implements ParkingRules, ConstantTypeVehicle, Con
 	private MotorcycleRepository motorcycleRepository;
 	@Autowired
 	private TicketController ticketController;
+	@Autowired
+	private CalculateTime calculateTime;
+	@Autowired
+	private CalculatorCost calculateCost;
 
 	@Autowired
 	Ticket ticket;
@@ -39,10 +46,6 @@ public class ParkingController implements ParkingRules, ConstantTypeVehicle, Con
 		if (vehicle.getTypeVehicle() == TYPE_MOTORCYCLE && numberOfMotorcyclesParked() > MOTORCYCLE_CAPACITY) {
 			throw new VehicleRegistrationException(NO_PLACES_AVAILABLES);
 		}
-	}
-
-	public Car findByPlate(String plate) {
-		return carRepository.findById(plate).get();
 	}
 
 	public int numberOfCarsParked() {
@@ -62,10 +65,11 @@ public class ParkingController implements ParkingRules, ConstantTypeVehicle, Con
 		}
 	}
 
-	public void registerCar(RequestRegister requestRegister) {
+	public Ticket registerCar(RequestRegister requestRegister) {
 		validateRegister(requestRegister.getCar(), requestRegister.getStartTime());
-		ticketController.generateCarTicket(requestRegister);
+		Ticket ticket = ticketController.generateCarTicket(requestRegister);
 		carRepository.save(requestRegister.getCar());
+		return ticket;
 	}
 
 	public void registerMotorcycle(RequestRegister requestRegister) {
@@ -77,21 +81,26 @@ public class ParkingController implements ParkingRules, ConstantTypeVehicle, Con
 	@Override
 	public boolean validateRegister(Vehicle vehicle, Date starTime) {
 		boolean available = true;
+		vehicleAlreadyParked(vehicle);
 		availableSpot(vehicle);
 		plateRestriction(vehicle, starTime);
 		return available;
 	}
 	
-	public long retireCar(Ticket ticket, Date endTime) {
-		carRepository.delete(ticket.getCar());		
-		return ticketController.calculateCarParkingCost(ticket,endTime);
+	public PaymentSlip solicitudeRetireCar(Ticket ticket, Date endTime) {
+		ticket = ticketController.validateTicket(ticket);		
+		PaymentSlip paymentSlip = new PaymentSlip(ticket.getCar(),new BigDecimal(calculateCost.calculateCarParkingCost(ticket,endTime)),calculateTime.returnDaysAndHoursSpent(ticket, endTime));
+		return paymentSlip;
 	}
 	
-	public long retireMotorCycle(Ticket ticket, Date endTime) {
-		motorcycleRepository.delete(ticket.getMotorcycle());
-		return ticketController.calculateMotorcycleParkingCost(ticket,endTime);
+	public PaymentSlip solicitudeRetireMotorcycle(Ticket ticket, Date endTime) {
+		PaymentSlip paymentSlip = new PaymentSlip(ticket.getCar(),new BigDecimal(calculateCost.calculateMotorcycleParkingCost(ticket,endTime)),calculateTime.returnDaysAndHoursSpent(ticket, endTime));
+		return paymentSlip;
+	}		
+	
+	public void vehicleAlreadyParked(Vehicle vehicle) {
+		if(carRepository.existsById(vehicle.getLicencePlate())) {
+			throw new VehicleRegistrationException(VEHICLE_ALREADY_PARKED);
+		}
 	}
-	
-	
-	
 }

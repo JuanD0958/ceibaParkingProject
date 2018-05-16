@@ -29,6 +29,7 @@ public class Ticket implements ParkingPrices, ConstantTypeVehicle{
 	private Date startTime;
 	private Date endTime;
 	private BigDecimal costParking;
+	private boolean paid;
 
 	public Ticket() {
 	}
@@ -91,6 +92,14 @@ public class Ticket implements ParkingPrices, ConstantTypeVehicle{
 
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
+	}
+
+	public boolean isPaid() {
+		return paid;
+	}
+
+	public void setPaid(boolean paid) {
+		this.paid = paid;
 	}
 
 }

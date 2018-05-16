@@ -3,6 +3,7 @@ package com.ceibaParking.application.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import com.ceibaParking.application.domain.Car;
 import com.ceibaParking.application.domain.Motorcycle;
 import com.ceibaParking.application.domain.RequestRegister;
 import com.ceibaParking.application.domain.Ticket;
+import com.ceibaParking.application.repository.TicketRepositoryImpl;
 import com.ceibaParking.application.repository.jpa.CarRepository;
 import com.ceibaParking.application.repository.jpa.MotorcycleRepository;
 
@@ -38,6 +40,8 @@ public class ParkingControllerTest implements ConstantMessageExceptions {
 	MotorcycleRepository motorcycleRepository;
 	@Mock
 	CarRepository carRepositoryMock;
+	@Mock
+	TicketController TicketController;
 
 	@Before
 	public void setup() {
@@ -96,8 +100,9 @@ public class ParkingControllerTest implements ConstantMessageExceptions {
 		String startDate = "15-05-2018 09:39";
 		String endDate = "15-05-2018 10:40";
 		Car car = new Car("MMY000");
-		Ticket ticket = new Ticket(car,formatter.parse(startDate));		
-		assertEquals(1000, parkingController.retireCar(ticket, formatter.parse(endDate)));
+		Ticket ticket = new Ticket(car,formatter.parse(startDate));	
+		Mockito.when(TicketController.validateTicket((Ticket)Mockito.any())).thenReturn(ticket);
+		assertEquals(new BigDecimal(1000), parkingController.solicitudeRetireCar(ticket, formatter.parse(endDate)).getTotalToPay());
 	}
 	
 	@Test
@@ -107,7 +112,8 @@ public class ParkingControllerTest implements ConstantMessageExceptions {
 		String endDate = "16-05-2018 12:40";
 		Car car = new Car("MMY000");
 		Ticket ticket = new Ticket(car,formatter.parse(startDate));
-		assertEquals(11000,parkingController.retireCar(ticket, formatter.parse(endDate)) );
+		Mockito.when(TicketController.validateTicket((Ticket)Mockito.any())).thenReturn(ticket);
+		assertEquals(new BigDecimal(11000),parkingController.solicitudeRetireCar(ticket, formatter.parse(endDate)).getTotalToPay() );
 	}
 	
 	@Test
@@ -117,7 +123,8 @@ public class ParkingControllerTest implements ConstantMessageExceptions {
 		String endDate = "15-05-2018 19:40";
 		Car car = new Car("MMY000");
 		Ticket ticket = new Ticket(car,formatter.parse(startDate));
-		assertEquals(8000, parkingController.retireCar(ticket, formatter.parse(endDate)) );
+		Mockito.when(TicketController.validateTicket((Ticket)Mockito.any())).thenReturn(ticket);
+		assertEquals(new BigDecimal(8000), parkingController.solicitudeRetireCar(ticket, formatter.parse(endDate)).getTotalToPay() );
 	}
 	
 	@Test
@@ -127,6 +134,7 @@ public class ParkingControllerTest implements ConstantMessageExceptions {
 		String endDate = "15-05-2018 10:40";
 		Motorcycle moto = new Motorcycle("ABC123A",550);
 		Ticket ticket = new Ticket(moto,formatter.parse(startDate));
-		assertEquals(2500, parkingController.retireMotorCycle(ticket, formatter.parse(endDate)) );
+		Mockito.when(TicketController.validateTicket((Ticket)Mockito.any())).thenReturn(ticket);
+		assertEquals(new BigDecimal(2500), parkingController.solicitudeRetireMotorcycle(ticket, formatter.parse(endDate)).getTotalToPay() );
 	}
 }

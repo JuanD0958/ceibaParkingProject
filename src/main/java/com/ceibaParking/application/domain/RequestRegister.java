@@ -7,6 +7,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class RequestRegister {
 	
+	public RequestRegister(Motorcycle motorcycle) {
+		super();
+		this.motorcycle = motorcycle;
+		this.startTime = new Date();
+	}
+
+	public RequestRegister(Car car) {
+		super();
+		this.car = car;
+		this.startTime = new Date();
+	}
+
+	public RequestRegister() {
+		
+	}
+	
 	public RequestRegister(Car car, Date startTime) {
 		super();
 		this.car = car;
@@ -46,9 +62,5 @@ public class RequestRegister {
 	private Car car;
 	private Motorcycle motorcycle;
 	private Date startTime;
-
-	public RequestRegister() {
-
-	}	
 
 }
