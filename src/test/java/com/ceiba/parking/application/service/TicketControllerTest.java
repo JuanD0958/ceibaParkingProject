@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.Before;
@@ -64,11 +66,23 @@ public class TicketControllerTest implements ConstantMessageExceptions{
 		
 	}
 
+
+
 	@Test
 	public void testSearchVehicle() {
 		Ticket ticket = new Ticket(vehicle,new Date());
 		Mockito.when(ticketRepositoryMock.findTicketByPlate(vehicle.getLicencePlate())).thenReturn(ticket);
 		assertNotNull(ticketControllerMock.searchVehicle(ticket.getLicencePlate()));	
+	}
+	
+	@Test
+	public void registerPayment() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
+		String startDate = "15-05-2018 09:39";
+		Vehicle moto = new Vehicle("ABC123A", 2, 550);
+		Ticket ticket = new Ticket(moto, formatter.parse(startDate));
+		Mockito.doNothing().when(ticketRepositoryMock).registerPayment(ticket);;
+		ticketControllerMock.registerPayment(ticket);
 	}
 
 }
