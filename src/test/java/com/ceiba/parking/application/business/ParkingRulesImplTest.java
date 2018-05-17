@@ -19,9 +19,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ceiba.parking.application.bussines.ParkingRulesImpl;
 import com.ceiba.parking.application.constants.ConstantMessageExceptions;
-import com.ceiba.parking.application.domain.Car;
-import com.ceiba.parking.application.repository.CarRepositoryImpl;
-import com.ceiba.parking.application.repository.MotorcycleRepositoryImpl;
+import com.ceiba.parking.application.domain.Vehicle;
+import com.ceiba.parking.application.repository.VehicleRepositoryImpl;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -32,10 +31,7 @@ public class ParkingRulesImplTest implements ConstantMessageExceptions {
 	ParkingRulesImpl parkingRulesImpl;
 
 	@Mock
-	CarRepositoryImpl carRepositoryImplMock;
-	
-	@Mock
-	MotorcycleRepositoryImpl motorcycleRepositoryImpl;
+	VehicleRepositoryImpl vehicleRepositoryImplMock;
 
 	@Before
 	public void setup() {
@@ -46,9 +42,9 @@ public class ParkingRulesImplTest implements ConstantMessageExceptions {
 	public void testValidateRegister() throws ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
 		String startDate = "26-05-2017 09:39";
-		Car car = new Car("MMY000");
-		Mockito.when(carRepositoryImplMock.existsById(Mockito.anyString())).thenReturn(false);
-		assertTrue(parkingRulesImpl.validateRegister(car, formatter.parse(startDate)));
+		Vehicle vehicle = new Vehicle("MMY000",1,1500);
+		Mockito.when(vehicleRepositoryImplMock.existsById(Mockito.anyString())).thenReturn(false);
+		assertTrue(parkingRulesImpl.validateRegister(vehicle, formatter.parse(startDate)));
 	}
 
 	@Test
@@ -56,9 +52,9 @@ public class ParkingRulesImplTest implements ConstantMessageExceptions {
 		try {
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
 			String startDate = "26-05-2017 09:39";
-			Car car = new Car("AMY000");
-			Mockito.when(carRepositoryImplMock.existsById(Mockito.anyString())).thenReturn(false);
-			parkingRulesImpl.plateRestriction(car, formatter.parse(startDate));
+			Vehicle vehicle = new Vehicle("MMY000",1,1500);
+			Mockito.when(vehicleRepositoryImplMock.existsById(Mockito.anyString())).thenReturn(false);
+			parkingRulesImpl.plateRestriction(vehicle, formatter.parse(startDate));
 		} catch (Exception e) {
 			assertEquals(NO_LAWFUL_DAY, e.getMessage());
 		}
@@ -67,9 +63,9 @@ public class ParkingRulesImplTest implements ConstantMessageExceptions {
 	@Test
 	public void testVehicleAlreadyParked() {
 		try {
-			Car car = new Car("MMY000");
-			Mockito.when(carRepositoryImplMock.existsById(Mockito.anyString())).thenReturn(true);
-			parkingRulesImpl.vehicleAlreadyParked(car);
+			Vehicle vehicle = new Vehicle("MMY000",1,1500);
+			Mockito.when(vehicleRepositoryImplMock.existsById(Mockito.anyString())).thenReturn(true);
+			parkingRulesImpl.vehicleAlreadyParked(vehicle);
 		} catch (Exception e) {
 			assertEquals(VEHICLE_ALREADY_PARKED, e.getMessage());
 		}
@@ -78,9 +74,9 @@ public class ParkingRulesImplTest implements ConstantMessageExceptions {
 	@Test
 	public void testAvailableCarSpot() {
 		try {
-			Car car = new Car("MMY000");
-			Mockito.when(carRepositoryImplMock.numberOfCarsParked()).thenReturn(21);
-			parkingRulesImpl.vehicleAlreadyParked(car);
+			Vehicle vehicle = new Vehicle("MMY000",1,1500);
+			Mockito.when(vehicleRepositoryImplMock.numberOfCarsParked()).thenReturn(21);
+			parkingRulesImpl.vehicleAlreadyParked(vehicle);
 		} catch (Exception e) {
 			assertEquals(NO_PLACES_AVAILABLES, e.getMessage());
 		}
@@ -90,9 +86,9 @@ public class ParkingRulesImplTest implements ConstantMessageExceptions {
 	@Test
 	public void testAvailableMotorcycleSpot() {
 		try {
-			Car car = new Car("ABC000A");
-			Mockito.when(motorcycleRepositoryImpl.numberOfMotorcyclesParked()).thenReturn(11);
-			parkingRulesImpl.vehicleAlreadyParked(car);
+			Vehicle vehicle = new Vehicle("MMY000",1,1500);
+			Mockito.when(vehicleRepositoryImplMock.numberOfMotorcyclesParked()).thenReturn(11);
+			parkingRulesImpl.vehicleAlreadyParked(vehicle);
 		} catch (Exception e) {
 			assertEquals(NO_PLACES_AVAILABLES, e.getMessage());
 		}

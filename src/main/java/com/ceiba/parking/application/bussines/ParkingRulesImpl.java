@@ -10,15 +10,13 @@ import com.ceiba.parking.application.constants.ConstantMessageExceptions;
 import com.ceiba.parking.application.constants.ConstantTypeVehicle;
 import com.ceiba.parking.application.domain.Vehicle;
 import com.ceiba.parking.application.exception.VehicleRegistrationException;
-import com.ceiba.parking.application.repository.CarRepositoryImpl;
-import com.ceiba.parking.application.repository.MotorcycleRepositoryImpl;
+import com.ceiba.parking.application.repository.VehicleRepositoryImpl;
 
 @Component
 public class ParkingRulesImpl implements ParkingRules, ParkingPrices, ConstantTypeVehicle, ConstantMessageExceptions {
 	@Autowired
-	CarRepositoryImpl carRepositoryImpl;
-	@Autowired
-	MotorcycleRepositoryImpl motorcycleRepositoryImpl;
+	VehicleRepositoryImpl vehicleRepositoryImpl;
+	
 	@Override
 	public boolean validateRegister(Vehicle vehicle, Date starTime) {
 		boolean available = true;
@@ -38,16 +36,16 @@ public class ParkingRulesImpl implements ParkingRules, ParkingPrices, ConstantTy
 	}
 	
 	public void vehicleAlreadyParked(Vehicle vehicle) {
-		if(carRepositoryImpl.existsById(vehicle.getLicencePlate())) {
+		if(vehicleRepositoryImpl.existsById(vehicle.getLicencePlate())) {
 			throw new VehicleRegistrationException(VEHICLE_ALREADY_PARKED);
 		}
 	}
 	
 	public void availableSpot(Vehicle vehicle) {
-		if (vehicle.getTypeVehicle() == TYPE_CAR && carRepositoryImpl.numberOfCarsParked() > CAR_CAPACITY) {
+		if (vehicle.getTypeVehicle() == TYPE_CAR && vehicleRepositoryImpl.numberOfCarsParked() > CAR_CAPACITY) {
 			throw new VehicleRegistrationException(NO_PLACES_AVAILABLES);
 		}
-		if (vehicle.getTypeVehicle() == TYPE_MOTORCYCLE && motorcycleRepositoryImpl.numberOfMotorcyclesParked() > MOTORCYCLE_CAPACITY) {
+		if (vehicle.getTypeVehicle() == TYPE_MOTORCYCLE && vehicleRepositoryImpl.numberOfMotorcyclesParked() > MOTORCYCLE_CAPACITY) {
 			throw new VehicleRegistrationException(NO_PLACES_AVAILABLES);
 		}
 	}

@@ -10,41 +10,33 @@ import com.ceiba.parking.application.domain.RequestRegister;
 import com.ceiba.parking.application.domain.Ticket;
 import com.ceiba.parking.application.exception.VehicleRegistrationException;
 import com.ceiba.parking.application.repository.TicketRepositoryImpl;
-import com.ceiba.parking.application.repository.jpa.CarRepository;
-import com.ceiba.parking.application.repository.jpa.MotorcycleRepository;
 
 @Service
 public class TicketController implements ParkingPrices, ConstantTypeVehicle, ConstantMessageExceptions{
 	@Autowired
-	public CarRepository carRepository;
-	@Autowired
-	public MotorcycleRepository motorcycleRepository;
-	@Autowired
-	private TicketRepositoryImpl ticketRepository;
-	
-	public TicketController() {
-	}
+	private TicketRepositoryImpl ticketRepository;	
 
-	public Ticket generateCarTicket(RequestRegister requestRegister) {
+	public Ticket generateVehicleTicket(RequestRegister requestRegister) {
 		Ticket ticket = null;
-		ticket = new Ticket(requestRegister.getCar(), requestRegister.getStartTime());		
-		ticketRepository.save(ticket);
+		ticket = new Ticket(requestRegister.getVehicle(), requestRegister.getStartTime());		
+		ticketRepository.createTicket(ticket);
 		return ticket;
 	}
-	
-	public Ticket generateMotorcycleTicket(RequestRegister requestRegister) {
-		Ticket ticket = null;
-		ticket = new Ticket(requestRegister.getMotorcycle(), requestRegister.getStartTime());		
-		ticketRepository.save(ticket);
-		return ticket;
-	}	
-
 		
 	public Ticket validateTicket(Ticket ticket) {
-		ticket = ticketRepository.findById(ticket.getTicketNumber());
-		if(ticket.isPaid()) {
+		ticket = ticketRepository.findTicketByPlate(ticket.getLicencePlate());
+		if(ticket == null) {
 			throw new VehicleRegistrationException(TICKET_ALREADY_PAID);
 		}
 		return ticket;
 	}
+	
+	public void registerPayment(Ticket paymentSlip) {
+		ticketRepository.registerPayment(paymentSlip);
+	}
+	
+	public Ticket searchVehicle(String licencePlate) {
+		return ticketRepository.findTicketByPlate(licencePlate);		
+	}
+	
 }
