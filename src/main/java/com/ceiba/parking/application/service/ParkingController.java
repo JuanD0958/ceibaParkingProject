@@ -51,7 +51,7 @@ public class ParkingController implements ConstantTypeVehicle, ConstantMessageEx
 	}
 	
 	public VehicleDTO searchVehicle(String licencePlate) {
-		Ticket ticketFoud = ticketController.searchVehicle(licencePlate);
-		return new VehicleDTO(ticketFoud.getLicencePlate(),ticketFoud.getStartTime(),ticketFoud.getTypeVehicle());
+		Ticket ticketFound = ticketController.searchVehicle(licencePlate);
+		return new VehicleDTO(ticketFound.getLicencePlate(),ticketFound.getStartTime(),ticketFound.getTypeVehicle());
 	}
 }

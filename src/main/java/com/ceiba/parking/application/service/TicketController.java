@@ -39,4 +39,5 @@ public class TicketController implements ParkingPrices, ConstantTypeVehicle, Con
 		return ticketRepository.findTicketByPlate(licencePlate);		
 	}
 	
+	
 }

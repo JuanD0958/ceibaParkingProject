@@ -34,25 +34,13 @@ public class Ticket implements ParkingPrices, ConstantTypeVehicle {
 		super();
 		this.startTime = startTime;
 		this.licencePlate = vehicle.getLicencePlate();
-		this.typeVehicle = vehicle.getTypeVehicle();
-	}
-
-	public int getTicketNumber() {
-		return ticketNumber;
-	}
-
-	public void setTicketNumber(int ticketNumber) {
-		this.ticketNumber = ticketNumber;
+		this.setTypeVehicle(vehicle.getTypeVehicle());
 	}
 
 	public Date getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-	
 	public BigDecimal getCostParking() {
 		return costParking;
 	}
@@ -61,16 +49,8 @@ public class Ticket implements ParkingPrices, ConstantTypeVehicle {
 		this.costParking = costParking;
 	}
 
-	public Date getEndTime() {
-		return endTime;
-	}
-
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
-	}
-
-	public boolean isPaid() {
-		return paid;
 	}
 
 	public void setPaid(boolean paid) {
@@ -81,16 +61,12 @@ public class Ticket implements ParkingPrices, ConstantTypeVehicle {
 		return licencePlate;
 	}
 
-	public void setLicencePlate(String licencePlate) {
-		this.licencePlate = licencePlate;
-	}
-
 	public int getTypeVehicle() {
 		return typeVehicle;
 	}
 
 	public void setTypeVehicle(int typeVehicle) {
 		this.typeVehicle = typeVehicle;
-	}
+	}	
 
 }

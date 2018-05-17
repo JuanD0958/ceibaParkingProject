@@ -29,16 +29,7 @@ public class RequestRetire {
 		return ticket;
 	}
 
-	public void setTicket(Ticket ticket) {
-		this.ticket = ticket;
-	}
-
 	public Date getEndTime() {
 		return endTime;
 	}
-
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
-
 }

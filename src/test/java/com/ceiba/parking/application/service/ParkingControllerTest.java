@@ -49,6 +49,7 @@ public class ParkingControllerTest implements ConstantMessageExceptions {
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
+		RequestRegister request = new RequestRegister();
 	}
 
 	@Test
@@ -156,5 +157,15 @@ public class ParkingControllerTest implements ConstantMessageExceptions {
 		Mockito.when(vehicleRepositoryMock.findCarByPlate(ticket.getLicencePlate())).thenReturn(moto);
 		assertEquals(new BigDecimal(2500),
 				parkingControllerMock.solicitudeRetireVehicle(ticket, formatter.parse(endDate)).getCostParking());
+	}
+	
+	@Test
+	public void registerPayment() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
+		String startDate = "15-05-2018 09:39";
+		Vehicle moto = new Vehicle("ABC123A", 2, 550);
+		Ticket ticket = new Ticket(moto, formatter.parse(startDate));
+		Mockito.doNothing().when(TicketControllerMock).registerPayment(ticket);
+		parkingControllerMock.registerPayment(ticket);
 	}
 }

@@ -38,16 +38,4 @@ public class Vehicle {
 	public int getTypeVehicle() {
 		return typeVehicle;
 	}
-
-	public void setCubicCentimeters(int cubicCentimeters) {
-		this.cubicCentimeters = cubicCentimeters;
-	}
-
-	public void setLicencePlate(String licencePlate) {
-		this.licencePlate = licencePlate;
-	}
-
-	public void setTypeVehicle(int typeVehicle) {
-		this.typeVehicle = typeVehicle;
-	}
 }
