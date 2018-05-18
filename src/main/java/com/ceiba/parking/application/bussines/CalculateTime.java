@@ -22,17 +22,4 @@ public class CalculateTime {
 		long diff = endTime.getTime() - ticket.getStartTime().getTime();
 		return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 	}
-
-	public String returnDaysAndHoursSpent(Ticket ticket, Date endTime) {
-		String response = "Time spent: ";
-		long daysOfParking = calcualteParkingDays(ticket, endTime);
-		long hoursOfParking = calcualteParkingHours(ticket, endTime) - daysOfParking * 24;
-		if (daysOfParking > 0) {
-			response = daysOfParking + " days";
-		}
-		if (hoursOfParking > 0) {
-			response = daysOfParking + " hours";
-		}
-		return response;
-	}
 }

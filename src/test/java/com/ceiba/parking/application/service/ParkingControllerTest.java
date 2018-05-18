@@ -49,7 +49,6 @@ public class ParkingControllerTest implements ConstantMessageExceptions {
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
-		RequestRegister request = new RequestRegister();
 	}
 
 	@Test
