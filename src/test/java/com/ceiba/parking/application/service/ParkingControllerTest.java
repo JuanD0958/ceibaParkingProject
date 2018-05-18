@@ -1,6 +1,7 @@
 package com.ceiba.parking.application.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
@@ -166,5 +167,16 @@ public class ParkingControllerTest implements ConstantMessageExceptions {
 		Ticket ticket = new Ticket(moto, formatter.parse(startDate));
 		Mockito.doNothing().when(TicketControllerMock).registerPayment(ticket);
 		parkingControllerMock.registerPayment(ticket);
+	}
+	
+	@Test
+	public void searchVehicleTest() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
+		String startDate = "15-05-2018 09:39";
+		String endDate = "15-05-2018 10:40";
+		Vehicle car = new Vehicle("MMY000", 1, 550);
+		Ticket ticket = new Ticket(car, formatter.parse(startDate));
+		Mockito.when(TicketControllerMock.searchVehicle(car.getLicencePlate())).thenReturn(ticket);
+		assertNotNull(parkingControllerMock.searchVehicle("MMY000"));
 	}
 }

@@ -13,17 +13,6 @@ public class RequestRetire {
 	public RequestRetire() {
 		
 	}
-	public RequestRetire(Ticket ticket, Date endTime) {
-		super();
-		this.ticket = ticket;
-		this.endTime = endTime;
-	}
-	
-	public RequestRetire(Ticket ticket) {
-		super();
-		this.ticket = ticket;
-		this.endTime = new Date();
-	}
 	
 	public Ticket getTicket() {
 		return ticket;

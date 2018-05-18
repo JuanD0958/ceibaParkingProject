@@ -7,12 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class RequestRegister {
 
-	public RequestRegister(Vehicle vehicle) {
-		super();
-		this.setVehicle(vehicle);
-		this.startTime = new Date();
-	}
-
 	public RequestRegister() {
 
 	}
