@@ -61,4 +61,14 @@ public class RestApi {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
 		}
 	}
+	
+	@GetMapping("/vehiclesParked")
+	public ResponseEntity<?> searchAllVehiclesParked() {
+		try {
+			return new ResponseEntity<>(parkingController.searchAllVehiclesParked(), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+		}
+	}
+	
 }

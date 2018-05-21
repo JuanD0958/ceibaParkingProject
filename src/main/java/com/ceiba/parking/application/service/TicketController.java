@@ -1,5 +1,7 @@
 package com.ceiba.parking.application.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +40,11 @@ public class TicketController implements ParkingPrices, ConstantTypeVehicle, Con
 	public Ticket searchVehicle(String licencePlate) {
 		return ticketRepository.findTicketByPlate(licencePlate);		
 	}
+	
+	public List<Ticket> findAllVehiclesParked(){
+		return ticketRepository.findAllVehiclesParked();
+	}
+	
 	
 	
 }

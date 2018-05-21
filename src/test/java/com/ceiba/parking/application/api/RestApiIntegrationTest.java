@@ -113,4 +113,15 @@ public class RestApiIntegrationTest implements ConstantMessageExceptions {
 			assertEquals(VEHICLE_NO_EXIST, e.getMessage());
 		}		
 	}
+	
+	@Test
+	public void searchVehiclesParked() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
+		String startDate = "26-05-2017 09:39";
+		Vehicle car = new Vehicle("MMY025", 1, 1500);
+		RequestRegister request = new RequestRegister(car, formatter.parse(startDate));
+		parkingController.registerVehicle(request);		
+		ResponseEntity<Object[]> responseEntity = restTemplate.getForEntity("http://localhost:"+randomServerPort+"/vehiclesParked", Object[].class);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
 }

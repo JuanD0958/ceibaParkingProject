@@ -1,5 +1,7 @@
 package com.ceiba.parking.application.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +35,10 @@ public class TicketRepositoryImpl implements ConstantMessageExceptions, Constant
 	
 	public boolean existsVehicleParked(String licencePlate) {
 		return ticketRepository.existsTicketByLicencePlateAndPaidFalse(licencePlate);
+	}
+	
+	public List<Ticket> findAllVehiclesParked(){
+		return ticketRepository.findAllTicketByPaidFalse();
 	}
 	
 }

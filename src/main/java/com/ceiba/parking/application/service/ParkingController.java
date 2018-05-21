@@ -1,7 +1,9 @@
 package com.ceiba.parking.application.service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,5 +55,18 @@ public class ParkingController implements ConstantTypeVehicle, ConstantMessageEx
 	public VehicleDTO searchVehicle(String licencePlate) {
 		Ticket ticketFound = ticketController.searchVehicle(licencePlate);
 		return new VehicleDTO(ticketFound.getLicencePlate(),ticketFound.getStartTime(),ticketFound.getTypeVehicle());
+	}
+	
+	public List<VehicleDTO> searchAllVehiclesParked(){
+		List<Ticket> listOfTickets = ticketController.findAllVehiclesParked();
+		List<VehicleDTO> listOfVehicles = new ArrayList<>();
+		VehicleDTO vehicle = new VehicleDTO();
+		for(Ticket ticketOfList:listOfTickets) {
+			vehicle.setLicencePlate(ticketOfList.getLicencePlate());
+			vehicle.setStarDate(ticketOfList.getStartTime());
+			vehicle.setTypeVehicle(ticketOfList.getTypeVehicle());
+			listOfVehicles.add(vehicle);
+		}
+		return listOfVehicles;
 	}
 }
