@@ -10,8 +10,12 @@ public class RequestRetire {
 	private Ticket ticket;
 	private Date endTime;
 	
-	public RequestRetire() {
-		
+	public RequestRetire() {		
+	}
+	
+	public RequestRetire(Ticket ticket,Date endTime) {
+		this.ticket = ticket;
+		this.endTime = endTime;
 	}
 	
 	public Ticket getTicket() {

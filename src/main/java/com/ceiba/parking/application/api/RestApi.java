@@ -1,7 +1,5 @@
 package com.ceiba.parking.application.api;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ceiba.parking.application.domain.RequestRegister;
 import com.ceiba.parking.application.domain.RequestRetire;
 import com.ceiba.parking.application.domain.Ticket;
-import com.ceiba.parking.application.domain.Vehicle;
 import com.ceiba.parking.application.service.ParkingController;
 
 @CrossOrigin
@@ -29,7 +26,7 @@ public class RestApi {
 	@PostMapping("/registerVehicle")
 	public ResponseEntity<?> registerCar(@RequestBody RequestRegister requestRegister) {
 		try {
-			return new ResponseEntity<>(parkingController.registerVehicle(requestRegister), HttpStatus.CREATED);
+			return new ResponseEntity<>(parkingController.registerVehicle(requestRegister), HttpStatus.OK);
 		} catch (Exception e) { 
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
 		}
@@ -40,7 +37,7 @@ public class RestApi {
 		try {
 			return new ResponseEntity<>(
 					parkingController.solicitudeRetireVehicle(requestRetire.getTicket(), requestRetire.getEndTime()),
-					HttpStatus.CREATED);
+					HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
 		}
@@ -63,10 +60,5 @@ public class RestApi {
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
 		}
-	}
-
-	@GetMapping("/prueba")
-	public RequestRegister prueba() {
-		return new RequestRegister(new Vehicle("MMY000",1,1),new Date());
 	}
 }
