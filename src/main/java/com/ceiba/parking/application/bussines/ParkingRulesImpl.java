@@ -42,10 +42,10 @@ public class ParkingRulesImpl implements ParkingRules, ParkingPrices, ConstantTy
 	}
 	
 	public void availableSpot(Vehicle vehicle) {
-		if (vehicle.getTypeVehicle() == TYPE_CAR && vehicleRepositoryImpl.numberOfCarsParked() > CAR_CAPACITY) {
+		if (vehicle.getTypeVehicle() == TYPE_CAR && vehicleRepositoryImpl.numberOfCarsParked() >= CAR_CAPACITY) {
 			throw new VehicleRegistrationException(NO_PLACES_AVAILABLES);
 		}
-		if (vehicle.getTypeVehicle() == TYPE_MOTORCYCLE && vehicleRepositoryImpl.numberOfMotorcyclesParked() > MOTORCYCLE_CAPACITY) {
+		if (vehicle.getTypeVehicle() == TYPE_MOTORCYCLE && vehicleRepositoryImpl.numberOfMotorcyclesParked() >= MOTORCYCLE_CAPACITY) {
 			throw new VehicleRegistrationException(NO_PLACES_AVAILABLES);
 		}
 	}
