@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.ceiba.parking.application.service.TicketControllerTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2018-05-21T20:50:42" hostname="JUAN-HERRERA" time="0.005">
+<testsuite name="com.ceiba.parking.application.service.TicketControllerTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2018-05-21T21:11:56" hostname="JUAN-HERRERA" time="0.006">
   <properties/>
   <testcase name="testValidateTicket" classname="com.ceiba.parking.application.service.TicketControllerTest" time="0.001"/>
-  <testcase name="registerPayment" classname="com.ceiba.parking.application.service.TicketControllerTest" time="0.002"/>
+  <testcase name="registerPayment" classname="com.ceiba.parking.application.service.TicketControllerTest" time="0.001"/>
   <testcase name="testSearchVehicle" classname="com.ceiba.parking.application.service.TicketControllerTest" time="0.001"/>
-  <testcase name="testValidateTicketTicketNotFound" classname="com.ceiba.parking.application.service.TicketControllerTest" time="0.001"/>
+  <testcase name="testValidateTicketTicketNotFound" classname="com.ceiba.parking.application.service.TicketControllerTest" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

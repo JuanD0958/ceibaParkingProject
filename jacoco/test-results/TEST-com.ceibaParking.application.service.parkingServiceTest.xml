@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.ceibaParking.application.service.parkingServiceTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2018-05-21T20:50:42" hostname="JUAN-HERRERA" time="0.002">
+<testsuite name="com.ceibaParking.application.service.parkingServiceTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2018-05-21T21:11:56" hostname="JUAN-HERRERA" time="0.051">
   <properties/>
-  <testcase name="initializationError" classname="com.ceibaParking.application.service.parkingServiceTest" time="0.002">
+  <testcase name="initializationError" classname="com.ceibaParking.application.service.parkingServiceTest" time="0.051">
     <failure message="java.lang.IllegalArgumentException: Could not find class [com.ceibaParking.application.Application]" type="java.lang.IllegalArgumentException">java.lang.IllegalArgumentException: Could not find class [com.ceibaParking.application.Application]
 	at org.springframework.util.ClassUtils.resolveClassName(ClassUtils.java:311)
 	at org.springframework.boot.test.context.SpringBootConfigurationFinder.scanPackage(SpringBootConfigurationFinder.java:72)
@@ -68,9 +68,9 @@ Caused by: java.lang.ClassNotFoundException: com.ceibaParking.application.Applic
 	... 54 more
 </failure>
   </testcase>
-  <system-out><![CDATA[2018-05-21 15:50:42.278  INFO 10764 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.ceibaParking.application.service.parkingServiceTest], using SpringBootContextLoader
-2018-05-21 15:50:42.279  INFO 10764 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.ceibaParking.application.service.parkingServiceTest]: no resource found for suffixes {-context.xml, Context.groovy}.
-2018-05-21 15:50:42.279  INFO 10764 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ceibaParking.application.service.parkingServiceTest]: parkingServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+  <system-out><![CDATA[2018-05-21 16:11:56.907  INFO 12624 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.ceibaParking.application.service.parkingServiceTest], using SpringBootContextLoader
+2018-05-21 16:11:56.909  INFO 12624 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.ceibaParking.application.service.parkingServiceTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2018-05-21 16:11:56.909  INFO 12624 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ceibaParking.application.service.parkingServiceTest]: parkingServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

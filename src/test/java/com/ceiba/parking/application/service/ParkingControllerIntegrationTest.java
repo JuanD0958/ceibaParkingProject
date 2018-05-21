@@ -1,9 +1,7 @@
 package com.ceiba.parking.application.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
-import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -17,7 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ceiba.parking.application.constants.ConstantMessageExceptions;
 import com.ceiba.parking.application.domain.RequestRegister;
-import com.ceiba.parking.application.domain.Ticket;
 import com.ceiba.parking.application.domain.Vehicle;
 import com.ceiba.parking.application.repository.TicketRepositoryImpl;
 
