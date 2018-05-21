@@ -30,7 +30,7 @@ public class RestApi {
 	public ResponseEntity<?> registerCar(@RequestBody RequestRegister requestRegister) {
 		try {
 			return new ResponseEntity<>(parkingController.registerVehicle(requestRegister), HttpStatus.CREATED);
-		} catch (Exception e) {
+		} catch (Exception e) { 
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
 		}
 	}
