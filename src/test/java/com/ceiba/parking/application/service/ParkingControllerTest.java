@@ -173,7 +173,6 @@ public class ParkingControllerTest implements ConstantMessageExceptions {
 	public void searchVehicleTest() throws ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
 		String startDate = "15-05-2018 09:39";
-		String endDate = "15-05-2018 10:40";
 		Vehicle car = new Vehicle("MMY000", 1, 550);
 		Ticket ticket = new Ticket(car, formatter.parse(startDate));
 		Mockito.when(TicketControllerMock.searchVehicle(car.getLicencePlate())).thenReturn(ticket);

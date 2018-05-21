@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.ceiba.parking.application.bussines.ParkingRulesImpl;
 import com.ceiba.parking.application.constants.ConstantMessageExceptions;
 import com.ceiba.parking.application.domain.Vehicle;
+import com.ceiba.parking.application.repository.TicketRepositoryImpl;
 import com.ceiba.parking.application.repository.VehicleRepositoryImpl;
 
 @SpringBootTest
@@ -32,6 +33,8 @@ public class ParkingRulesImplTest implements ConstantMessageExceptions {
 
 	@Mock
 	VehicleRepositoryImpl vehicleRepositoryImplMock;
+	@Mock
+	TicketRepositoryImpl ticketRepository;
 
 	@Before
 	public void setup() {
@@ -42,8 +45,8 @@ public class ParkingRulesImplTest implements ConstantMessageExceptions {
 	public void testValidateRegister() throws ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
 		String startDate = "26-05-2017 09:39";
-		Vehicle vehicle = new Vehicle("MMY000",1,1500);
-		Mockito.when(vehicleRepositoryImplMock.existsById(Mockito.anyString())).thenReturn(false);
+		Vehicle vehicle = new Vehicle("MMY001",1,1500);
+		Mockito.when(ticketRepository.existsVehicleParked(Mockito.anyString())).thenReturn(false);
 		assertTrue(parkingRulesImpl.validateRegister(vehicle, formatter.parse(startDate)));
 	}
 
@@ -53,7 +56,7 @@ public class ParkingRulesImplTest implements ConstantMessageExceptions {
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
 			String startDate = "26-05-2017 09:39";
 			Vehicle vehicle = new Vehicle("MMY000",1,1500);
-			Mockito.when(vehicleRepositoryImplMock.existsById(Mockito.anyString())).thenReturn(false);
+			Mockito.when(ticketRepository.existsVehicleParked(Mockito.anyString())).thenReturn(false);
 			parkingRulesImpl.plateRestriction(vehicle, formatter.parse(startDate));
 		} catch (Exception e) {
 			assertEquals(NO_LAWFUL_DAY, e.getMessage());
@@ -64,7 +67,7 @@ public class ParkingRulesImplTest implements ConstantMessageExceptions {
 	public void testVehicleAlreadyParked() {
 		try {
 			Vehicle vehicle = new Vehicle("MMY000",1,1500);
-			Mockito.when(vehicleRepositoryImplMock.existsById(Mockito.anyString())).thenReturn(true);
+			Mockito.when(ticketRepository.existsVehicleParked(Mockito.anyString())).thenReturn(true);
 			parkingRulesImpl.vehicleAlreadyParked(vehicle);
 		} catch (Exception e) {
 			assertEquals(VEHICLE_ALREADY_PARKED, e.getMessage());
@@ -76,7 +79,7 @@ public class ParkingRulesImplTest implements ConstantMessageExceptions {
 		try {
 			Vehicle vehicle = new Vehicle("MMY000",1,1500);
 			Mockito.when(vehicleRepositoryImplMock.numberOfCarsParked()).thenReturn(21);
-			parkingRulesImpl.vehicleAlreadyParked(vehicle);
+			parkingRulesImpl.availableSpot(vehicle);
 		} catch (Exception e) {
 			assertEquals(NO_PLACES_AVAILABLES, e.getMessage());
 		}
@@ -88,7 +91,7 @@ public class ParkingRulesImplTest implements ConstantMessageExceptions {
 		try {
 			Vehicle vehicle = new Vehicle("MMY000",1,1500);
 			Mockito.when(vehicleRepositoryImplMock.numberOfMotorcyclesParked()).thenReturn(11);
-			parkingRulesImpl.vehicleAlreadyParked(vehicle);
+			parkingRulesImpl.availableSpot(vehicle);
 		} catch (Exception e) {
 			assertEquals(NO_PLACES_AVAILABLES, e.getMessage());
 		}

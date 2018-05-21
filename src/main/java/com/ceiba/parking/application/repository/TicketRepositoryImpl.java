@@ -27,14 +27,6 @@ public class TicketRepositoryImpl implements ConstantMessageExceptions, Constant
 		}
 		return ticket;
 	}
-
-	public Ticket findById(Integer idTicket) {		
-		Optional<Ticket> value = ticketRepository.findById(idTicket);
-		if(value.isPresent()) {
-			return value.get();			
-		}
-		throw new VehicleRegistrationException(VEHICLE_NO_EXIST);
-	}
 	
 	public void registerPayment(Ticket ticket) {
 		ticket.setPaid(true);

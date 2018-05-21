@@ -1,6 +1,5 @@
 package com.ceiba.parking.application.repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +13,6 @@ import com.ceiba.parking.application.repository.jpa.VehicleRepository;
 public class VehicleRepositoryImpl {
 	@Autowired
 	VehicleRepository vehicleRepository;
-
-	public List<Vehicle> findVehicles() {
-		return vehicleRepository.findAll();
-	}
 
 	@Transactional
 	public void registerVehicle(Vehicle vehicle) {
@@ -38,13 +33,5 @@ public class VehicleRepositoryImpl {
 
 	public int numberOfMotorcyclesParked() {
 		return vehicleRepository.findAllMotorcycles().size();
-	}
-
-	public boolean existsById(String licencePlate) {
-		return vehicleRepository.existsById(licencePlate);
-	}
-	
-	public void retireVehicle(String licencePlate) {
-		 vehicleRepository.deleteById(licencePlate);
 	}
 }
