@@ -41,7 +41,7 @@ public class CalculatorCost implements ParkingPrices,ConstantTypeVehicle {
 		} else {
 			costParking += hoursOfParking * CAR_HOUR_COST;
 		}
-		return costParking;
+		return costParking==0?CAR_HOUR_COST:costParking;
 	}
 
 	public long calculateMotorcycleParkingCost(Ticket ticket,int cubicCentimeters, Date endTime) {
@@ -58,6 +58,6 @@ public class CalculatorCost implements ParkingPrices,ConstantTypeVehicle {
 		if (cubicCentimeters > HIGH_CYLINDERED_MOTORCYCLE) {
 			costParking += HIGH_CYLINDERED_MOTORCYCLE_CHARGE;
 		}
-		return costParking;
+		return costParking==0?MOTORCYCLE_HOUR_COST:costParking;
 	}
 }

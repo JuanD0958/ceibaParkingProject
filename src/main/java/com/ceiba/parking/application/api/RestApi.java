@@ -35,7 +35,7 @@ public class RestApi {
 		}
 	}
 
-	@PostMapping("/retireCar")
+	@PostMapping("/retireVehicle")
 	public ResponseEntity<?> retireCar(@RequestBody RequestRetire requestRetire) {
 		try {
 			return new ResponseEntity<>(
