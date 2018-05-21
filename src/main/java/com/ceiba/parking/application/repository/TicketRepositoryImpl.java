@@ -41,4 +41,8 @@ public class TicketRepositoryImpl implements ConstantMessageExceptions, Constant
 		ticketRepository.save(ticket);
 	}
 	
+	public boolean existsVehicleParked(String licencePlate) {
+		return ticketRepository.existsTicketByLicencePlateAndPaidFalse(licencePlate);
+	}
+	
 }

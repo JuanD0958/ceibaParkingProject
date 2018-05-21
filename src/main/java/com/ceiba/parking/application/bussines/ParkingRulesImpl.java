@@ -10,12 +10,15 @@ import com.ceiba.parking.application.constants.ConstantMessageExceptions;
 import com.ceiba.parking.application.constants.ConstantTypeVehicle;
 import com.ceiba.parking.application.domain.Vehicle;
 import com.ceiba.parking.application.exception.VehicleRegistrationException;
+import com.ceiba.parking.application.repository.TicketRepositoryImpl;
 import com.ceiba.parking.application.repository.VehicleRepositoryImpl;
 
 @Component
 public class ParkingRulesImpl implements ParkingRules, ParkingPrices, ConstantTypeVehicle, ConstantMessageExceptions {
 	@Autowired
 	VehicleRepositoryImpl vehicleRepositoryImpl;
+	@Autowired
+	TicketRepositoryImpl ticketRepositoryImpl;
 	
 	@Override
 	public boolean validateRegister(Vehicle vehicle, Date starTime) {
@@ -36,7 +39,7 @@ public class ParkingRulesImpl implements ParkingRules, ParkingPrices, ConstantTy
 	}
 	
 	public void vehicleAlreadyParked(Vehicle vehicle) {
-		if(vehicleRepositoryImpl.existsById(vehicle.getLicencePlate())) {
+		if(ticketRepositoryImpl.existsVehicleParked(vehicle.getLicencePlate())) {
 			throw new VehicleRegistrationException(VEHICLE_ALREADY_PARKED);
 		}
 	}

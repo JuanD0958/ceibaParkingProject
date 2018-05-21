@@ -40,6 +40,10 @@ public class Ticket implements ParkingPrices, ConstantTypeVehicle {
 	public Date getStartTime() {
 		return startTime;
 	}
+	
+	public Date getEndTime() {
+		return endTime;
+	}
 
 	public BigDecimal getCostParking() {
 		return costParking;
@@ -56,6 +60,10 @@ public class Ticket implements ParkingPrices, ConstantTypeVehicle {
 	public void setPaid(boolean paid) {
 		this.paid = paid;
 	}
+	
+	public boolean getPaid() {
+		return paid;
+	}
 
 	public String getLicencePlate() {
 		return licencePlate;
@@ -67,6 +75,10 @@ public class Ticket implements ParkingPrices, ConstantTypeVehicle {
 
 	public void setTypeVehicle(int typeVehicle) {
 		this.typeVehicle = typeVehicle;
+	}	
+	
+	public int getTicketNumber() {
+		return ticketNumber;
 	}	
 
 }
