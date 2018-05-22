@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import com.ceiba.parking.application.domain.Ticket;
 import com.ceiba.parking.application.domain.Vehicle;
 import com.ceiba.parking.application.domain.VehicleDTO;
 import com.ceiba.parking.application.repository.TicketRepositoryImpl;
+import com.ceiba.parking.application.repository.VehicleRepositoryImpl;
 import com.ceiba.parking.application.service.ParkingController;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -38,9 +40,15 @@ public class RestApiIntegrationTest implements ConstantMessageExceptions {
 	ParkingController parkingController;
 	@Autowired
 	TicketRepositoryImpl ticketRepository;
+	@Autowired
+	VehicleRepositoryImpl vehicleRepositoryImpl;
 	
 	private TestRestTemplate restTemplate = new TestRestTemplate();
 	
+	@After
+	public void deleteVehicles() {
+		vehicleRepositoryImpl.deleteAllVehicles();
+	}
 	
 	@Test
 	public void registerVehicle() throws ParseException {
