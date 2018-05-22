@@ -55,6 +55,7 @@ public class ParkingControllerTest implements ConstantMessageExceptions {
 
 	@Before
 	public void setup() {
+		vehicleRepository.deleteAllVehicles();
 		MockitoAnnotations.initMocks(this);
 	}
 
