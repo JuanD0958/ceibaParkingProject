@@ -15,6 +15,7 @@ import com.ceiba.parking.application.domain.RequestRegister;
 import com.ceiba.parking.application.domain.RequestRetire;
 import com.ceiba.parking.application.domain.Ticket;
 import com.ceiba.parking.application.service.ParkingController;
+import com.ceiba.parking.application.service.TcrmController;
 
 @CrossOrigin
 @Service
@@ -22,6 +23,9 @@ import com.ceiba.parking.application.service.ParkingController;
 public class RestApi {
 	@Autowired
 	ParkingController parkingController;
+	@Autowired
+	TcrmController tcrmController;
+
 
 	@PostMapping("/registerVehicle")
 	public ResponseEntity<?> registerCar(@RequestBody RequestRegister requestRegister) {
@@ -66,6 +70,15 @@ public class RestApi {
 	public ResponseEntity<?> searchAllVehiclesParked() {
 		try {
 			return new ResponseEntity<>(parkingController.searchAllVehiclesParked(), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+		}
+	}
+	
+	@GetMapping("/TRM")
+	public ResponseEntity<?> getTrm() {
+		try {
+			return new ResponseEntity<>(tcrmController.consultaTrm(), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
 		}
