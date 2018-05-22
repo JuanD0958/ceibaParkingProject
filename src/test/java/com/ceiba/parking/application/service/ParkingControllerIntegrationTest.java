@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import com.ceiba.parking.application.domain.RequestRegister;
 import com.ceiba.parking.application.domain.Ticket;
 import com.ceiba.parking.application.domain.Vehicle;
 import com.ceiba.parking.application.repository.TicketRepositoryImpl;
+import com.ceiba.parking.application.repository.VehicleRepositoryImpl;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -32,7 +34,13 @@ public class ParkingControllerIntegrationTest  implements ConstantMessageExcepti
 	TicketRepositoryImpl ticketpository;
 	@Autowired
 	Ticket ticket;
+	@Autowired
+	VehicleRepositoryImpl vehicleRepositoryImpl;
 
+	@After
+	public void deleteVehicles() {
+		vehicleRepositoryImpl.deleteAllVehicles();
+	}
 
 	@Test
 	public void registerCarVehicleService() throws ParseException {
@@ -41,6 +49,7 @@ public class ParkingControllerIntegrationTest  implements ConstantMessageExcepti
 		Vehicle car = new Vehicle("IMY020", 1, 1500);
 		RequestRegister request = new RequestRegister(car, formatter.parse(startDate));
 		parkingController.registerVehicle(request);
+		vehicleRepositoryImpl.deleteVehicle(car.getLicencePlate());
 		assertEquals(car.getLicencePlate(), ticketpository.findTicketByPlate(car.getLicencePlate()).getLicencePlate());
 	}
 
@@ -52,6 +61,7 @@ public class ParkingControllerIntegrationTest  implements ConstantMessageExcepti
 		Vehicle motorcycle = new Vehicle("IBD23A", 2, 400);
 		RequestRegister request = new RequestRegister(motorcycle, formatter.parse(startDate));
 		parkingController.registerVehicle(request);
+		vehicleRepositoryImpl.deleteVehicle(motorcycle.getLicencePlate());
 		assertEquals(motorcycle.getLicencePlate(), ticketpository.findTicketByPlate(motorcycle.getLicencePlate()).getLicencePlate());
 	}
 
@@ -72,6 +82,7 @@ public class ParkingControllerIntegrationTest  implements ConstantMessageExcepti
 		Vehicle car = new Vehicle("IMY003", 1, 1500);
 		RequestRegister request = new RequestRegister(car, formatter.parse(startDate));
 		parkingController.registerVehicle(request);		
+		vehicleRepositoryImpl.deleteVehicle(car.getLicencePlate());
 		assertEquals(car.getLicencePlate(), ticketpository.findTicketByPlate(car.getLicencePlate()).getLicencePlate());
 	}
 

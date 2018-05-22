@@ -34,4 +34,12 @@ public class VehicleRepositoryImpl {
 	public int numberOfMotorcyclesParked() {
 		return vehicleRepository.findAllMotorcycles().size();
 	}
+	
+	public void deleteVehicle(String licencePlate) {
+		vehicleRepository.deleteById(licencePlate);
+	}
+	
+	public void deleteAllVehicles() {
+		vehicleRepository.deleteAll();
+	}
 }
