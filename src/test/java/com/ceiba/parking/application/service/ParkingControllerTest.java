@@ -60,27 +60,6 @@ public class ParkingControllerTest implements ConstantMessageExceptions {
 	}
 
 	@Test
-	public void registerCarVehicleService() throws ParseException {
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
-		String startDate = "26-05-2017 09:39";
-		Vehicle car = new Vehicle("MMY000", 1, 1500);
-		RequestRegister request = new RequestRegister(car, formatter.parse(startDate));
-		parkingController.registerVehicle(request);
-//		assertTrue(vehicleRepository.existsById(car.getLicencePlate()));
-	}
-
-	@Test
-	public void registerMotorcycleVehicleService() throws ParseException {
-		// Arrange
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
-		String startDate = "26-05-2017 09:39";
-		Vehicle motorcycle = new Vehicle("XYZ123A", 2, 400);
-		RequestRegister request = new RequestRegister(motorcycle, formatter.parse(startDate));
-		parkingController.registerVehicle(request);
-//		assertTrue(vehicleRepository.existsById(motorcycle.getLicencePlate()));
-	}
-
-	@Test
 	public void noLawfulDayregisterVehicle() {
 		// Arrange
 

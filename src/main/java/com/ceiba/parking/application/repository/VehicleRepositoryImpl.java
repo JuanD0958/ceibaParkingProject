@@ -35,6 +35,7 @@ public class VehicleRepositoryImpl {
 		return vehicleRepository.findAllMotorcycles().size();
 	}
 	
+	@Transactional
 	public void deleteVehicle(String licencePlate) {
 		vehicleRepository.deleteById(licencePlate);
 	}

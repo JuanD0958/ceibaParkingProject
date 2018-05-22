@@ -20,6 +20,7 @@ import com.ceiba.parking.application.domain.Ticket;
 import com.ceiba.parking.application.domain.Vehicle;
 import com.ceiba.parking.application.repository.TicketRepositoryImpl;
 import com.ceiba.parking.application.repository.VehicleRepositoryImpl;
+import com.ceiba.parking.application.repository.jpa.VehicleRepository;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -36,6 +37,8 @@ public class ParkingControllerIntegrationTest  implements ConstantMessageExcepti
 	Ticket ticket;
 	@Autowired
 	VehicleRepositoryImpl vehicleRepositoryImpl;
+	@Autowired
+	VehicleRepository vehicleRepository;
 
 	@After
 	public void deleteVehicles() {
@@ -46,10 +49,10 @@ public class ParkingControllerIntegrationTest  implements ConstantMessageExcepti
 	public void registerCarVehicleService() throws ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
 		String startDate = "26-05-2017 09:39";
-		Vehicle car = new Vehicle("IMY020", 1, 1500);
+		Vehicle car = new Vehicle("MMY111", 1, 1500);
 		RequestRegister request = new RequestRegister(car, formatter.parse(startDate));
 		parkingController.registerVehicle(request);
-		vehicleRepositoryImpl.deleteVehicle(car.getLicencePlate());
+		vehicleRepository.deleteById(car.getLicencePlate());
 		assertEquals(car.getLicencePlate(), ticketpository.findTicketByPlate(car.getLicencePlate()).getLicencePlate());
 	}
 
@@ -58,11 +61,12 @@ public class ParkingControllerIntegrationTest  implements ConstantMessageExcepti
 		// Arrange
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
 		String startDate = "26-05-2017 09:39";
-		Vehicle motorcycle = new Vehicle("IBD23A", 2, 400);
+		Vehicle motorcycle = new Vehicle("MMY112", 2, 400);
 		RequestRegister request = new RequestRegister(motorcycle, formatter.parse(startDate));
 		parkingController.registerVehicle(request);
-		vehicleRepositoryImpl.deleteVehicle(motorcycle.getLicencePlate());
+		vehicleRepository.deleteById(motorcycle.getLicencePlate());
 		assertEquals(motorcycle.getLicencePlate(), ticketpository.findTicketByPlate(motorcycle.getLicencePlate()).getLicencePlate());
+		
 	}
 
 	@Test
@@ -79,10 +83,10 @@ public class ParkingControllerIntegrationTest  implements ConstantMessageExcepti
 	public void searchVehicleTestFound() throws ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
 		String startDate = "26-05-2017 09:39";
-		Vehicle car = new Vehicle("IMY003", 1, 1500);
+		Vehicle car = new Vehicle("MMY113", 1, 1500);
 		RequestRegister request = new RequestRegister(car, formatter.parse(startDate));
 		parkingController.registerVehicle(request);		
-		vehicleRepositoryImpl.deleteVehicle(car.getLicencePlate());
+		vehicleRepository.deleteById(car.getLicencePlate());
 		assertEquals(car.getLicencePlate(), ticketpository.findTicketByPlate(car.getLicencePlate()).getLicencePlate());
 	}
 
@@ -91,10 +95,10 @@ public class ParkingControllerIntegrationTest  implements ConstantMessageExcepti
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
 		String startDate = "15-05-2018 09:39";
 		String endDate = "15-05-2018 10:40";
-		Vehicle vehicle = new Vehicle("IMY004", 1, 1200);
+		Vehicle vehicle = new Vehicle("MMY114", 1, 1200);
 		RequestRegister request = new RequestRegister(vehicle, formatter.parse(startDate));
 		Ticket ticket = new Ticket(vehicle, formatter.parse(startDate));
-		parkingController.registerVehicle(request);		
+		parkingController.registerVehicle(request);	
 		assertEquals(new BigDecimal(1000),
 				parkingController.solicitudeRetireVehicle(ticket, formatter.parse(endDate)).getCostParking());
 	}
@@ -105,7 +109,7 @@ public class ParkingControllerIntegrationTest  implements ConstantMessageExcepti
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
 			String startDate = "15-05-2018 09:39";
 			String endDate = "15-05-2018 10:40";
-			Vehicle vehicle = new Vehicle("IMY005", 1, 1200);
+			Vehicle vehicle = new Vehicle("MMY115", 1, 1200);
 			RequestRegister request = new RequestRegister(vehicle, formatter.parse(startDate));
 			Ticket ticket = new Ticket(vehicle, formatter.parse(startDate));
 			parkingController.registerVehicle(request);		
