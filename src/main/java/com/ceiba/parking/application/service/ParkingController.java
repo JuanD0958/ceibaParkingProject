@@ -60,8 +60,9 @@ public class ParkingController implements ConstantTypeVehicle, ConstantMessageEx
 	public List<VehicleDTO> searchAllVehiclesParked(){
 		List<Ticket> listOfTickets = ticketController.findAllVehiclesParked();
 		List<VehicleDTO> listOfVehicles = new ArrayList<>();
-		VehicleDTO vehicle = new VehicleDTO();
+		VehicleDTO vehicle;
 		for(Ticket ticketOfList:listOfTickets) {
+			vehicle = new VehicleDTO();
 			vehicle.setLicencePlate(ticketOfList.getLicencePlate());
 			vehicle.setStarDate(ticketOfList.getStartTime());
 			vehicle.setTypeVehicle(ticketOfList.getTypeVehicle());
