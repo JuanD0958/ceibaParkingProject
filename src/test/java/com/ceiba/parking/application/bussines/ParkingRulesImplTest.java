@@ -53,7 +53,7 @@ public class ParkingRulesImplTest implements ConstantMessageExceptions {
 	public void testCarAvailableSpot() {
 		try {
 			Vehicle vehicle = new Vehicle("MMY000", 1, 1200);
-			Mockito.when(vehicleRepository.numberOfCarsParked()).thenReturn(25);
+			Mockito.when(vehicleRepository.numberOfCarsParked()).thenReturn(200);
 			parkingRules.availableSpot(vehicle);
 			fail();
 		} catch (Exception e) {
@@ -65,7 +65,7 @@ public class ParkingRulesImplTest implements ConstantMessageExceptions {
 	public void testMotorcycleAvailableSpot() {
 		try {
 			Vehicle vehicle = new Vehicle("MMY000", 2, 1200);
-			Mockito.when(vehicleRepository.numberOfMotorcyclesParked()).thenReturn(11);
+			Mockito.when(vehicleRepository.numberOfMotorcyclesParked()).thenReturn(200);
 			parkingRules.availableSpot(vehicle);
 			fail();
 		} catch (Exception e) {
