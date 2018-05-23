@@ -61,7 +61,7 @@
 //		// Arrange
 //		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm");
 //		String startDate = "26-05-2017 09:39";
-//		Vehicle motorcycle = new Vehicle("MMY111", 2, 400);
+//		Vehicle motorcycle = new Vehicle("MMY112", 2, 400);
 //		RequestRegister request = new RequestRegister(motorcycle, formatter.parse(startDate));
 //		deleteVehicleIfExist(motorcycle.getLicencePlate());
 //		parkingController.registerVehicle(request);		
