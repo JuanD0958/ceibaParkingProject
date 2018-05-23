@@ -18,8 +18,8 @@ public class TcrmControllerTest {
 
 	@Autowired
 	TcrmController tcrmController;
-	@Autowired
-	
+//	@Autowired
+//	
 //	@Test
 //	public void testConsultaTrm() throws RemoteException {
 //		TcrmDTO tcrmDTO = tcrmController.consultaTrm();
