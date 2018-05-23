@@ -20,10 +20,10 @@ public class TcrmControllerTest {
 	TcrmController tcrmController;
 	@Autowired
 	
-	@Test
-	public void testConsultaTrm() throws RemoteException {
-		TcrmDTO tcrmDTO = tcrmController.consultaTrm();
-		assertTrue(tcrmDTO.isSuccess());
-	}
+//	@Test
+//	public void testConsultaTrm() throws RemoteException {
+//		TcrmDTO tcrmDTO = tcrmController.consultaTrm();
+//		assertTrue(tcrmDTO.isSuccess());
+//	}
 
 }
